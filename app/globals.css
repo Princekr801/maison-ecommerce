@@ -693,6 +693,30 @@ nav {
 }
 .buy-btn:hover { background: #d4b88a; transform: translateY(-2px); }
 
+/* ===== BANK OFFERS ===== */
+.offers-section { background: var(--white); }
+.offers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 32px; }
+.offer-card { background: var(--cream); border-radius: var(--radius-lg); padding: 32px; text-align: center; cursor: pointer; transition: all 0.4s var(--smooth); box-shadow: var(--shadow-sm); }
+.offer-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+.offer-bank { font-size: 40px; margin-bottom: 16px; }
+.offer-title { font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.offer-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+.offer-badge { display: inline-block; background: rgba(45,106,79,0.1); color: var(--accent); font-size: 11px; font-weight: 700; padding: 6px 14px; border-radius: 6px; margin-top: 16px; letter-spacing: 1px; text-transform: uppercase; }
+
+/* ===== RECOMMENDATIONS ===== */
+.recs { background: var(--ink); color: #fff; }
+.recs .section-header h2 { color: #fff; }
+.rec-scroll { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+.rec-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; transition: all 0.4s var(--smooth); }
+.rec-card:hover { background: rgba(255,255,255,0.05); border-color: rgba(200,169,126,0.3); transform: translateY(-8px); }
+.rec-img { height: 240px; width: 100%; overflow: hidden; }
+.rec-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--smooth); }
+.rec-card:hover .rec-img img { transform: scale(1.06); }
+.rec-info { padding: 24px; }
+.rec-name { font-size: 18px; font-weight: 400; font-family: var(--ff-serif); color: #fff; margin-bottom: 8px; }
+.rec-price { font-size: 18px; color: var(--warm); font-weight: 700; }
+.rec-orig { font-size: 14px; color: rgba(255,255,255,0.4); text-decoration: line-through; margin-left: 10px; }
+
 /* ===== REVIEWS & FEEDBACK ===== */
 .reviews-section { background: var(--white); }
 .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; margin-bottom: 60px; }

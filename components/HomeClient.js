@@ -21,6 +21,42 @@ export default function HomeClient() {
     { stars: 4, text: "The ceramic mugs are beautiful and feel great to hold. Only giving 4 stars because I wish there were more color options.", author: "Emily R." }
   ]);
 
+  const bankOffers = [
+    {
+      id: 1,
+      icon: "🏦",
+      title: "SBI Credit Card",
+      desc: "10% instant discount up to ₹500",
+      badge: "Min. ₹2,000",
+      advantages: ["Instant processing at checkout", "No hidden processing fees", "Earn SBI Reward points on this purchase", "Zero liability protection"]
+    },
+    {
+      id: 2,
+      icon: "💳",
+      title: "HDFC Bank",
+      desc: "5% cashback on all orders",
+      badge: "No min. order",
+      advantages: ["Unlimited cashback", "Credited within 48 hours", "Stackable with site discounts", "Free lounge access points"]
+    },
+    {
+      id: 3,
+      icon: "📱",
+      title: "UPI Cashback",
+      desc: "Flat ₹50 off on UPI payments",
+      badge: "First UPI order",
+      advantages: ["Lightning fast payment", "No card details needed", "Secure 256-bit encryption", "Works with GPay, PhonePe, Paytm"]
+    },
+    {
+      id: 4,
+      icon: "💰",
+      title: "No-Cost EMI",
+      desc: "0% EMI on orders above ₹3,000",
+      badge: "3 / 6 / 12 months",
+      advantages: ["Pay in easy installments", "Zero interest charged", "Instant approval", "Major credit cards accepted"]
+    }
+  ];
+  const [selectedOffer, setSelectedOffer] = useState(null);
+
   // Filter & Sort State
   const [activeFilter, setActiveFilter] = useState('all');
   const [currentSort, setCurrentSort] = useState('default');
@@ -294,25 +330,20 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* OFFERS */}
+      {/* BANK OFFERS */}
       <section className="offers-section">
         <div className="section-header">
           <h2>Bank Offers & EMI</h2>
-          <span className="see-all">All offers →</span>
         </div>
         <div className="offers-grid">
-          <div className="offer-card">
-            <div className="offer-bank">🏦</div><div className="offer-title">SBI Credit Card</div><div className="offer-desc">10% instant discount up to ₹500</div><span className="offer-badge">Min. ₹2,000</span>
-          </div>
-          <div className="offer-card">
-            <div className="offer-bank">💳</div><div className="offer-title">HDFC Bank</div><div className="offer-desc">5% cashback on all orders</div><span className="offer-badge">No min. order</span>
-          </div>
-          <div className="offer-card">
-            <div className="offer-bank">📱</div><div className="offer-title">UPI Cashback</div><div className="offer-desc">Flat ₹50 off on UPI payments</div><span className="offer-badge">First UPI order</span>
-          </div>
-          <div className="offer-card">
-            <div className="offer-bank">💰</div><div className="offer-title">No-Cost EMI</div><div className="offer-desc">0% EMI on orders above ₹3,000</div><span className="offer-badge">3 / 6 / 12 months</span>
-          </div>
+          {bankOffers.map(offer => (
+            <div className="offer-card" key={offer.id} onClick={() => setSelectedOffer(offer)}>
+              <div className="offer-bank">{offer.icon}</div>
+              <div className="offer-title">{offer.title}</div>
+              <div className="offer-desc">{offer.desc}</div>
+              <div className="offer-badge">{offer.badge}</div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -413,6 +444,30 @@ export default function HomeClient() {
       <WishlistSidebar products={products} />
       <AccountSidebar />
       <CheckoutModal />
+
+      {/* OFFER DETAILS MODAL */}
+      {selectedOffer && (
+        <div className="modal-wrap open" onClick={() => setSelectedOffer(null)}>
+          <div className="modal" style={{ maxWidth: '500px', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setSelectedOffer(null)}>×</button>
+            <div style={{ padding: '40px' }}>
+              <div style={{ fontSize: '48px', marginBottom: '16px', textAlign: 'center' }}>{selectedOffer.icon}</div>
+              <h2 style={{ fontFamily: 'var(--ff-serif)', fontSize: '32px', marginBottom: '8px', textAlign: 'center' }}>{selectedOffer.title}</h2>
+              <p style={{ color: 'var(--muted)', textAlign: 'center', marginBottom: '24px', fontSize: '16px' }}>{selectedOffer.desc}</p>
+              
+              <h4 style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '16px', fontWeight: '700' }}>Advantages & Details</h4>
+              <ul style={{ listStyle: 'none', padding: 0 }}>
+                {selectedOffer.advantages.map((adv, i) => (
+                  <li key={i} style={{ marginBottom: '12px', display: 'flex', alignItems: 'flex-start', gap: '12px', fontSize: '15px' }}>
+                    <span style={{ color: 'var(--accent)' }}>✓</span> {adv}
+                  </li>
+                ))}
+              </ul>
+              <button className="btn-primary" style={{ width: '100%', marginTop: '24px' }} onClick={() => setSelectedOffer(null)}>Got it</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* PRODUCT MODAL */}
       <div className={`modal-wrap ${modalProduct ? 'open' : ''}`} onClick={(e) => { if(e.target.classList.contains('modal-wrap')) setModalProduct(null) }}>
