@@ -64,6 +64,7 @@ export default function HomeClient() {
   // Modal State
   const [modalProduct, setModalProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState('M');
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
   // Hero Carousel State
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -342,6 +343,17 @@ export default function HomeClient() {
               <div className="offer-title">{offer.title}</div>
               <div className="offer-desc">{offer.desc}</div>
               <div className="offer-badge">{offer.badge}</div>
+              {selectedOffer?.id === offer.id && (
+                <div className="offer-popup" onClick={(e) => { e.stopPropagation(); setSelectedOffer(null); }}>
+                  <button className="modal-close" style={{top:'12px', right:'12px', width:'30px', height:'30px', fontSize:'18px'}} onClick={(e) => { e.stopPropagation(); setSelectedOffer(null); }}>×</button>
+                  <h4>Advantages & Details</h4>
+                  <ul>
+                    {offer.advantages.map((adv, i) => (
+                      <li key={i}><span>✓</span> {adv}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -394,7 +406,7 @@ export default function HomeClient() {
             <p>
               We believe that the objects we surround ourselves with should elevate our daily rituals. Every product on our platform is rigorously vetted for craftsmanship, sustainability, and aesthetic brilliance. Welcome to a better way of living.
             </p>
-            <button className="btn-primary" style={{marginTop:'16px'}}>Read Our Story</button>
+            <button className="btn-primary" style={{marginTop:'16px'}} onClick={() => setIsHistoryOpen(true)}>Read Our History</button>
           </div>
           <div className="about-image">
             <img src="/image_candle.png" alt="About Maison" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -445,25 +457,19 @@ export default function HomeClient() {
       <AccountSidebar />
       <CheckoutModal />
 
-      {/* OFFER DETAILS MODAL */}
-      {selectedOffer && (
-        <div className="modal-wrap open" onClick={() => setSelectedOffer(null)}>
-          <div className="modal" style={{ maxWidth: '500px', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setSelectedOffer(null)}>×</button>
+      {/* HISTORY MODAL */}
+      {isHistoryOpen && (
+        <div className="modal-wrap open" onClick={() => setIsHistoryOpen(false)}>
+          <div className="modal" style={{ maxWidth: '600px', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setIsHistoryOpen(false)}>×</button>
             <div style={{ padding: '40px' }}>
-              <div style={{ fontSize: '48px', marginBottom: '16px', textAlign: 'center' }}>{selectedOffer.icon}</div>
-              <h2 style={{ fontFamily: 'var(--ff-serif)', fontSize: '32px', marginBottom: '8px', textAlign: 'center' }}>{selectedOffer.title}</h2>
-              <p style={{ color: 'var(--muted)', textAlign: 'center', marginBottom: '24px', fontSize: '16px' }}>{selectedOffer.desc}</p>
-              
-              <h4 style={{ fontSize: '14px', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '16px', fontWeight: '700' }}>Advantages & Details</h4>
-              <ul style={{ listStyle: 'none', padding: 0 }}>
-                {selectedOffer.advantages.map((adv, i) => (
-                  <li key={i} style={{ marginBottom: '12px', display: 'flex', alignItems: 'flex-start', gap: '12px', fontSize: '15px' }}>
-                    <span style={{ color: 'var(--accent)' }}>✓</span> {adv}
-                  </li>
-                ))}
-              </ul>
-              <button className="btn-primary" style={{ width: '100%', marginTop: '24px' }} onClick={() => setSelectedOffer(null)}>Got it</button>
+              <h2 style={{ fontFamily: 'var(--ff-serif)', fontSize: '36px', marginBottom: '24px', color: 'var(--warm)' }}>Our History & Vision</h2>
+              <div style={{ color: 'var(--muted)', fontSize: '16px', lineHeight: 1.8 }}>
+                <p style={{marginBottom: '16px'}}><strong>Our Goal:</strong> To bridge the gap between timeless artisanal craftsmanship and modern digital convenience. We want every piece in your home to tell a story.</p>
+                <p style={{marginBottom: '16px'}}><strong>Our Passion:</strong> True luxury is in the details. We obsess over the micro-interactions, the materials, and the sustainability of every product we curate.</p>
+                <p style={{marginBottom: '16px'}}><strong>Our Ideology:</strong> Buy less, but buy better. We stand against fast fashion and throwaway culture. MAISON is about enduring quality.</p>
+                <p><strong>Our Business Model:</strong> We partner directly with independent creators and heritage brands, cutting out the middleman to deliver extraordinary value without compromising on quality or ethics.</p>
+              </div>
             </div>
           </div>
         </div>
